@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block con %}
+    <h1>PROFILE PAGE</h1>
+
+    <img src="{{ user.getpic }}" width="250px"><br><br>
+
+    <table>
+        <tr>
+            <th>USERNAME</th>
+            <td><input type="text" value="{{user.username}}" disabled></td>
+        </tr>
+        <tr>
+            <th>EMAIL</th>
+            <td><input type="text" value="{{user.email}}" disabled></td>
+        </tr>
+        <tr>
+            <th>LASTNAME</th>
+            <td><input type="text" value="{{user.last_name}}" disabled></td>
+        </tr>
+        <tr>
+            <th>FIRSTNAME</th>
+            <td><input type="text" value="{{user.first_name}}" disabled></td>
+        </tr>
+        <tr>
+            <td colspan="2"> <textarea cols="40" rows="5" disabled>{{user.comment}}</textarea> </td>
+        </tr>
+    </table>
+
+    
+    <a href="{% url 'acc:update' %}"><button>정보수정</button></a>
+
+    <hr>
+
+    <form method="post" action="{% url 'acc:delete' %}">
+        {% csrf_token %}
+        <h6>계정을 삭제하려면 현재 패스워드를 입력해주셔야 합니다.</h6>
+        <input type="password" name="cpass" placeholder="INPUT CURRENT PASSWORD" size="30">
+        <button>계정삭제</button>
+    </form>
+
+    <br><br><br>
+    <style>
+        th, td{
+            padding: 10px;
+        }
+    </style>
+
+{% endblock %}

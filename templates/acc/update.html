@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block con %}
+    <h1>UPDATE PAGE</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>USERNAME</th>
+                <td><input type="text" name="uname" value="{{user.username}}" disabled></td>
+            </tr>
+            <tr>
+                <th>EMAIL</th>
+                <td><input type="text" value="{{ user.email }}" name="umail"></td>
+            </tr>
+            <tr>
+                <th>LASTNAME</th>
+                <td><input type="text" value="{{ user.last_name }}" name="lname"></td>
+            </tr>
+            <tr>
+                <th>FIRSTNAME</th>
+                <td><input type="text" value="{{ user.first_name }}" name="fname"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="file" name="upic"> </td>
+            </tr>
+            <tr>
+                <td colspan="2"> <b>COMMENT</b><br><textarea cols="40" rows="5" name="ucomm">{{ user.comment }}</textarea> </td>
+            </tr>
+        </table>
+        <button>정보수정</button>
+    </form>
+    <hr>
+
+
+    <form method="post" action="{% url 'acc:chpass' %}">
+        {% csrf_token %}
+        <h6>패스워드를 변경하려면 현재 비밀번호와 바꿀 비밀번호를 입력해주세요. <br>※ 변경 시 자동으로 로그아웃 됩니다!!</h6>
+        <input type="password" name="cpass" placeholder="INPUT CURRENT PASSWORD" size="30">
+        <input type="password" name="npass" placeholder="INPUT NEW PASSWORD" size="30">
+        <button>패스워드변경</button>
+    </form>
+    
+    <br><br><br>
+
+
+    <style>
+        th, td{
+            padding: 10px;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block noauth %}
+    <h1>SIGNUP PAGE</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>USERNAME</th>
+                <td><input type="text" name="uname"></td>
+            </tr>
+            <tr>
+                <th>PASSWORD</th>
+                <td><input type="password" name="upass"></td>
+            </tr>
+            <tr>
+                <th>EMAIL</th>
+                <td><input type="text" name="umail"></td>
+            </tr>
+            <tr>
+                <th>LASTNAME</th>
+                <td><input type="text" name="lname"></td>
+            </tr>
+            <tr>
+                <th>FIRSTNAME</th>
+                <td><input type="text" name="fname"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="file" name="upic"> </td>
+            </tr>
+            <tr>
+                <td colspan="2"> <b>COMMENT</b><br><textarea cols="40" rows="5" name="ucomm"></textarea> </td>
+            </tr>
+        </table>
+        <button>회원가입</button>
+    </form> 
+
+    <style>
+        th, td{
+            padding: 10px;
+        }
+    </style>
+
+{% endblock %}

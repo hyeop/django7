@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block con %}
+
+    {% load mathfilters %}
+    <h1>게시판</h1>
+
+    <div>
+        <a href="{% url 'board:create' %}"><button>게시글생성</button></a>
+    </div>
+    <br><br>
+
+    <table border="1">
+        <tr>
+            <th>NO</th>
+            <th>SUBJECT</th>
+            <th>SUMMARY</th>
+            <th>WRITER</th>
+            <th>LIKEY</th>
+        </tr>
+        {% for i in bset %}
+            <tr>
+                <td>{{ bset.start_index|add:forloop.counter0 }}</td>
+                <td><a href="{% url 'board:detail' i.id %}">{{ i.subject }}</a></td>
+                <td>{{ i.content|truncatewords:5 }}</td>
+                <td>{{ i.writer }}</td>
+                <td>{{ i.likey.count }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+            {% if kw %}
+                    <td colspan="5">검색결과가 없습니다.. 🤸🏻‍♀️</td>
+            {% else %}
+                    <td colspan="5">첫번째 게시글을 작성해주세요 🙏🏻</td>
+            {% endif %} 
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <br><br>
+
+    {% if bset.has_previous %}
+        <a href="{% url 'board:index' %}?page=1&kw={{kw}}&cate={{cate}}"><button>처음</button></a>
+        <a href="{% url 'board:index' %}?page={{ bset.previous_page_number }}&kw={{kw}}&cate={{cate}}"><button>이전</button></a>
+    {% else %}
+        <button disabled>처음</button>
+        <button disabled>이전</button>
+    {% endif %}
+
+
+    {% for i in bset.paginator.page_range %}
+        {% if i >= bset.number|sub:5 and bset.number|add:4 >= i %}
+            <a href="{% url 'board:index' %}?page={{i}}&kw={{kw}}&cate={{cate}}"><button {% if i == bset.number %} disabled {% endif %}>{{ i }}</button></a>
+        {% endif %}
+    {% endfor %}
+
+    {% if bset.has_next %}
+        <a href="{% url 'board:index' %}?page={{ bset.next_page_number }}&kw={{kw}}&cate={{cate}}"><button>다음</button></a>
+        <a href="{% url 'board:index' %}?page={{ bset.paginator.num_pages }}&kw={{kw}}&cate={{cate}}"><button>마지막</button></a>
+    {% else %}
+        <button disabled>다음</button>
+        <button disabled>마지막</button>
+    {% endif %}
+
+    <br><br>
+    <form>
+        <select name="cate">
+            <option value="sub" {% if cate == "sub" %} selected {% endif %}>제목</option>
+            <option value="wri" {% if cate == "wri" %} selected {% endif %}>작성자</option>
+            <option value="con" {% if cate == "con" %} selected {% endif %}>내용</option>
+        </select>
+        <input type="text" name="kw" value="{{kw}}" size="40">
+        <button>검색</button>
+        <a href="{% url 'board:index' %}"><button type="button">리셋</button></a>
+    </form>
+
+
+    <style>
+        th, td{
+            padding:10px;
+        }
+    </style>
+
+
+
+{% endblock %}

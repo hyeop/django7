@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block con %}
+
+    <h1>토픽생성</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="sub" placeholder="주제를 입력해주세요"><br><br>
+        <textarea cols="50" name="con" rows="6" placeholder="주제에 대해 간략하게 설명해주세요"></textarea>
+        <br>
+        <hr>
+        <button type="button" onclick="makechoice()">보기생성</button>
+        <button>토픽생성</button>
+        <div id="here"></div>
+    </form>
+
+
+    <script>
+        function makechoice(){
+            d = document.getElementById("here"); // 위에서 id 가 here 인 친구지정
+            p = document.createElement("p"); // <p> </p>
+            p.innerHTML = "보기 <input type='text' name='cho' placeholder='보기이름을 입력하세요'><br>";
+            // <p> 보기 <input type='text' placeholder='보기이름을 입력하세요'><br><br> </p>
+            d.appendChild(p);
+        }
+    </script>
+
+{% endblock %}
